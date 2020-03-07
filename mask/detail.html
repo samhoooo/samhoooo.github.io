@@ -31,7 +31,7 @@
                 dataType: "json",
                 success: (result) => {
                     console.log(result)
-                    $("#shop-name").val(result.name);
+                    $("#shop-name").html(result.name);
                 },
             });
         });
