@@ -70,8 +70,12 @@ input:checked + .slider:before {
 }
 
 .container {
-  width: 300px;
+  width: 100%;
   padding: 20px;
+}
+
+.center-align {
+  text-align: center;
 }
 
 .text-1 {
