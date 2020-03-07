@@ -13,15 +13,20 @@
         <div class="title-bar">
             口罩黑網店警報器
         </div>
-        <div class="container center-align">
-            <img src="/static/img/mask-logo.png"></img>
+        <div id="main-content" class="content" style="display: none">
+            <div class="container center-align">
+                <img src="/static/img/mask-logo.png"></img>
+            </div>
+            <div class="container center-align title-1" id="shop-name">
+            </div>
+            <hr class="style1"/>
+            <div class="container center-align">
+                <div id="reason"></div>
+                <div class="container" id="reference"></div>
+            </div>
         </div>
-        <div class="container center-align title-1" id="shop-name">
-        </div>
-        <hr class="style1"/>
-        <div class="container center-align">
-            <div id="reason"></div>
-            <div class="container" id="reference"></div>
+        <div class="content-loader container">
+            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
     </body>
 
@@ -43,6 +48,8 @@
                     for (let ref of Object.values(result.ref)) {
                         $("#reference").append(`<div><a href="${ref.url}"> ${ref.title} </a></div>`);
                     }
+                    $(".content-loader").hide();
+                    $("#main-content").show();
                 },
             });
         });
