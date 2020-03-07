@@ -36,8 +36,8 @@
                 success: (result) => {
                     console.log(result)
                     $("#shop-name").html(result.name);
-                    $("#reason").html(result.reason);
-                    for (let ref of result.ref) {
+                    $("#reason").html(`原因：${result.reason}`);
+                    for (let ref of Object.value(result.ref)) {
                         $("#reference").append(`<div><a href="${ref.url}"> ${ref.title} </a></div>`);
                     }
                 },
