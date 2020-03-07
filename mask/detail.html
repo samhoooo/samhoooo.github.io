@@ -28,30 +28,59 @@
         <div class="content-loader container">
             <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
         </div>
+        <div id="load-error" class="container" style="display: none">
+            <div class="title-1">Error</div>
+        </div>
     </body>
 
     <script src="/static/js/jquery.min.js"></script>
     <script>
+        function getUrlVars()
+        {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        function errorHandler() {
+            $(".content-loader").hide();
+            $("#load-error").show();
+        }
+
         $(document).ready(() => {
-            $.ajax({
-                type: 'POST',
-                url: 'https://us-central1-blueribbonsblocking.cloudfunctions.net/widgets/check-url',
-                data: JSON.stringify({
-                    keyword: 'pepe.hk'
-                }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: (result) => {
-                    console.log(result)
-                    $("#shop-name").html(result.name);
-                    $("#reason").html(`原因：${result.reason}`);
-                    for (let ref of Object.values(result.ref)) {
-                        $("#reference").append(`<div><a href="${ref.url}"> ${ref.title} </a></div>`);
+            const keyword = getUrlVars()["keyword"];
+            if (keyword) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://us-central1-blueribbonsblocking.cloudfunctions.net/widgets/check-url',
+                    data: JSON.stringify({
+                        keyword: decodeURIComponent(keyword)
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: (result) => {
+                        console.log(result)
+                        $("#shop-name").html(result.name);
+                        $("#reason").html(`原因：${result.reason}`);
+                        for (let ref of Object.values(result.ref)) {
+                            $("#reference").append(`<div><a href="${ref.url}"> ${ref.title} </a></div>`);
+                        }
+                        $(".content-loader").hide();
+                        $("#main-content").show();
+                    },
+                    error: (result) => {
+                        errorHandler();
                     }
-                    $(".content-loader").hide();
-                    $("#main-content").show();
-                },
-            });
+                });
+            } else {
+                errorHandler();
+            }
         });
     </script>
 
