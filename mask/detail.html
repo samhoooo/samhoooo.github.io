@@ -16,6 +16,10 @@
         <div class="container center-align title-1" id="shop-name">
         </div>
         <hr class="style1"/>
+        <div class="container center-align text-1" id="reason">
+        </div>
+        <div class="container center-align text-1" id="reference">
+        </div>
     </body>
 
     <script src="/static/js/jquery.min.js"></script>
@@ -32,6 +36,10 @@
                 success: (result) => {
                     console.log(result)
                     $("#shop-name").html(result.name);
+                    $("#reason").html(result.reason);
+                    for (let ref in result.ref) {
+                        $("#reference").append(`<a href="${ref.url}"> ${ref.title} </a>`);
+                    }
                 },
             });
         });
